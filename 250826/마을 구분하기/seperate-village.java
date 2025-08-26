@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main2 {
+public class Main {
 	static int N;
     static int[][] grid;
     static boolean[][] visited;
