@@ -26,7 +26,7 @@ public class Main {
 			}
 		}
 		int bestK = 0, bestCnt = 0;
-		for (int k = 0; k < max; k++) {   // ★ 0부터 시작
+		for (int k = 0; k <= max; k++) {   // ★ 0부터 시작
     		cnt = 0;
     		visited = new boolean[N][M];
    			for (int i = 0; i < N; i++) {
