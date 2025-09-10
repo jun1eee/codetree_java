@@ -16,6 +16,7 @@ public class Main {
         M = Integer.parseInt(st.nextToken());
         map = new int[N][M];
         int max = Integer.MIN_VALUE;
+
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < M; j++) {
@@ -24,12 +25,10 @@ public class Main {
             }
         }
 
-        int bestK = 0, bestCnt = 0;
-
-        for (int k = 0; k <= max; k++) {
+        int bestK = 1, bestCnt = 0;   // ★ K는 최소 1부터 시작
+        for (int k = 1; k <= max; k++) {
             cnt = 0;
             visited = new boolean[N][M];
-
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < M; j++) {
                     if (map[i][j] > k && !visited[i][j]) {
@@ -39,8 +38,8 @@ public class Main {
                     }
                 }
             }
-
-            if (cnt > bestCnt || (cnt == bestCnt && k > bestK)) {
+            // ★ 동률일 경우 더 작은 k 유지
+            if (cnt > bestCnt) {
                 bestCnt = cnt;
                 bestK = k;
             }
@@ -53,7 +52,6 @@ public class Main {
         for (int i = 0; i < 4; i++) {
             int nr = r + dr[i];
             int nc = c + dc[i];
-
             if (nr < 0 || nc < 0 || nr >= N || nc >= M) continue;
             if (map[nr][nc] > k && !visited[nr][nc]) {
                 visited[nr][nc] = true;
