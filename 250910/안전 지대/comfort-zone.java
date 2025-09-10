@@ -26,23 +26,24 @@ public class Main {
 			}
 		}
 		int bestK = 0, bestCnt = 0;
-		for (int k = 0 ; k <= max; k++) {
-			cnt = 0;
-			visited = new boolean[N][M];
-			for (int i = 0; i < N; i++) {
-				for (int j = 0; j < M; j++) {
-					if (map[i][j] > k && !visited[i][j]) {
-						visited[i][j] = true;
-						cnt++;
-						dfs(i,j,k);
-					}
-				}
-			}
-			if (cnt > bestCnt) {
-                bestCnt = cnt;
-                bestK = k;
-            }
+		for (int k = 0; k < max; k++) {   // ★ 0부터 시작
+    		cnt = 0;
+    		visited = new boolean[N][M];
+   			for (int i = 0; i < N; i++) {
+        		for (int j = 0; j < M; j++) {
+            		if (map[i][j] > k && !visited[i][j]) {
+                		visited[i][j] = true;
+                		cnt++;
+                		dfs(i, j, k);
+            		}
+        		}
+    		}
+    		if (cnt > bestCnt || (cnt == bestCnt && k > bestK)) {
+     		    bestCnt = cnt;
+        		bestK = k;
+    		}
 		}
+
 		sb.append(bestK).append(" ").append(bestCnt);
 		System.out.println(sb.toString());
 	}
