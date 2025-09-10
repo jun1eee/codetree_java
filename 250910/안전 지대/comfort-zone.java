@@ -25,7 +25,7 @@ public class Main {
 				max = Math.max(max, map[i][j]);
 			}
 		}
-		int bestK = -1, bestCnt = 0;
+		int bestK = 0, bestCnt = 0;
 		for (int k = 1 ; k <= max; k++) {
 			cnt = 0;
 			visited = new boolean[N][M];
