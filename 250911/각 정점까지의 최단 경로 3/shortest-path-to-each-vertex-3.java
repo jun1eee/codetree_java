@@ -62,6 +62,9 @@ public class Main {
 			Node curNode = pq.poll();
 			int cur = curNode.end;
 			
+			if (curNode.weight != dist[cur]) continue;
+            if (dist[cur] == INF) continue;
+			
 			for (Node node : list[cur]) {
 				if (dist[node.end] > dist[cur] + node.weight) {
 					dist[node.end] = dist[cur] + node.weight;;
