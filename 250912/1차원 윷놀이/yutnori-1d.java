@@ -1,57 +1,62 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
+    static int N, M, K;
+    static int[] move;        // 각 턴의 이동값
+    static int[] position;    // 말들의 현재 위치(0 시작)
+    static boolean[] finish;  // 각 말의 완주 여부
+    static int answer = 0;
 
-	private static int N, M, K, cntMax;
-	private static int[] arrN, arr; // 순열 배열
-	private static int[] moveArr; // 말위치 배열
-	private static int answer;
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        K = Integer.parseInt(st.nextToken());
 
-	public static void main(String[] args) throws Exception {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		N = Integer.parseInt(st.nextToken()); // 턴 수
-		M = Integer.parseInt(st.nextToken()); // 윳놀이 판 상태
-		K = Integer.parseInt(st.nextToken()); // 말 수
+        move = new int[N];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) move[i] = Integer.parseInt(st.nextToken());
 
-		arrN = new int[N];
-		st = new StringTokenizer(br.readLine());
-		for (int i = 0; i < N; i++) {
-			arrN[i] = Integer.parseInt(st.nextToken());
-		}
+        position = new int[K];
+        finish = new boolean[K];
 
-		arr = new int[N]; // 순열 배열
-		f(0);
-		System.out.println(answer);
-	}
+        dfs(0);
+        System.out.println(answer);
+    }
 
-	private static void f(int cnt) {
-		if (cnt == N) {
-			calculate();
-			return;
-		}
+    // turn번째 턴에서 어떤 말을 움직일지 선택
+    static void dfs(int turn) {
+        if (turn == N) {
+            int done = 0;
+            for (int i = 0; i < K; i++) if (finish[i]) done++;
+            answer = Math.max(answer, done);
+            return;
+        }
 
-		for (int i = 0; i < K; i++) {
-			arr[cnt] = i;
-			f(cnt + 1);
-		}
-	}
+        boolean movedThisTurn = false;
+        for (int i = 0; i < K; i++) {
+            if (finish[i]) continue;       // 완주한 말은 더 이상 못 움직임
+            movedThisTurn = true;
 
-	private static void calculate() {
-		int score = 0;
-		moveArr = new int[K + 1];
-		
-		for (int i = 0; i < N; i++) {
-			moveArr[arr[i]] += arrN[i];
-		}
-		
-		for (int i = 1; i <= K; i++) {
-			if(moveArr[i] >= M-1) {
-				score++;
-			}
-			
-		}
-		answer = Math.max(answer, score);
-	}
+            int prevPos = position[i];
+            boolean prevFin = finish[i];
+
+            position[i] += move[turn];
+            if (position[i] >= M - 1) {    // 종점(0..M-1 기준)
+                position[i] = M - 1;
+                finish[i] = true;
+            }
+
+            dfs(turn + 1);
+
+            // rollback
+            position[i] = prevPos;
+            finish[i] = prevFin;
+        }
+
+        // 모두 완주해서 움직일 수 있는 말이 없으면 턴만 진행
+        if (!movedThisTurn) dfs(turn + 1);
+    }
 }
