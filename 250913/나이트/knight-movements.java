@@ -37,6 +37,7 @@ public class Main {
 
             if (currentX == end[0] && currentY == end[1]) {
                 System.out.println(count);
+                return;
             }
 
             for (int i = 0; i < 2; i++) {
@@ -53,5 +54,7 @@ public class Main {
                 }
             }
         }
+
+        System.out.println(-1);
     }
 }
