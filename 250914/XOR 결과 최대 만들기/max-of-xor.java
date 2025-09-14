@@ -31,7 +31,7 @@ public class Main {
 
 		if (cnt < M) {
 			dfs(idx + 1, cnt + 1, x ^ arr[idx]);
-			dfs(idx + 1, cnt, x);
 		}
+		dfs(idx + 1, cnt, x);
 	}
 }
