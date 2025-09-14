@@ -39,7 +39,7 @@ public class Main {
 		}
 		
 		for (int i = 0; i < K; i++) {
-			if (pieces[i] >= M) continue;
+			
 			pieces[i] += nums[n];
 			dfs(n+1);
 			pieces[i] -= nums[n];
